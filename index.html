@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="galleryForm">
+        <label for="authorFirstName">Author First Name:</label>
+        <input type="text" id="authorFirstName" required>
+
+        <label for="authorLastName">Author Last Name:</label>
+        <input type="text" id="authorLastName" required>
+
+        <label for="authorBirthDate">Author Birth Date:</label>
+        <input type="text" id="authorBirthDate" required>
+
+        <label for="artworkTitle">Artwork Title:</label>
+        <input type="text" id="artworkTitle" required>
+
+        <label for="artworkPrice">Artwork Price:</label>
+        <input type="number" id="artworkPrice" required>
+
+        <label for="artworkYear">Artwork Year:</label>
+        <input type="number" id="artworkYear" required>
+
+        <button type="submit">Add Artwork</button>
+    </form>
+
+    <button onclick="displayTotalPrice()">Display Total Price</button>
+    <button onclick="displayTopThreeArtworks()">Display Top Three Artworks</button>
+    <button onclick="displayArtworkByAuthor()">Display Artwork By Author</button>
+    <button onclick="displayAuthorsAndArtworks()">Display Authors and Artworks</button>
+
+    
+</body>
+<script>
+     const form = document.getElementById('galleryForm');
+        const gallery = new Gallery();
+
+        form.addEventListener('submit', function (e)){
+            e.preventDefault();
+
+            const authorFirstName = document.getElementById('authorFirstName').value;
+            const authorLastName = document.getElementById('authorLastName').value;
+            const authorBirthDate = document.getElementById('authorBirthDate').value;
+            const artworkTitle = document
+        }
+
+</script>
+<script>
+       function Author(firstName, lastName, birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+    
+    function Artwork(author, title, price, year) {
+        this.author = author;
+        this.title = title;
+        this.price = price;
+        this.year = year;
+    }
+    
+    function Gallery() {
+        this.artworks = [];
+    
+        Gallery.prototype.addArtwork = function (artwork) {
+            this.artworks.push(artwork);
+        };
+    
+        Gallery.prototype.getTotalPrice = function () {
+            return this.artworks.reduce((total, artwork) => total + artwork.price, 0);
+        };
+    
+        Gallery.prototype.getTopThreeArtworks = function () {
+            const sortedArtworks = this.artworks.slice().sort((a, b) => b.price - a.price);
+            return sortedArtworks.slice(0, 3);
+        };
+    
+        Gallery.prototype.getArtworkByAuthor = function (authorName) {
+            const artworksByAuthor = this.artworks.filter(artwork => artwork.author.firstName === authorName);
+            return artworksByAuthor.sort((a, b) => a.price - b.price);
+        };
+    
+        Gallery.prototype.getAuthorsAndArtworks = function () {
+            const authors = {};
+            this.artworks.forEach(artwork => {
+                const authorName = `${artwork.author.firstName} ${artwork.author.lastName}`;
+                if (!authors[authorName]) {
+                    authors[authorName] = [];
+                }
+                authors[authorName].push(artwork);
+            });
+            return authors;
+        };
+    }
+
+</script>
+</html>
